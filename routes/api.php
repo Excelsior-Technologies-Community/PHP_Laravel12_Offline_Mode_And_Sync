@@ -3,16 +3,124 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoteController;
 
-Route::get('/notes', [NoteController::class, 'index']);
 
-Route::post('/notes/sync', [NoteController::class, 'sync']);
+/*
+|--------------------------------------------------------------------------
+| Notes
+|--------------------------------------------------------------------------
+*/
 
-Route::post('/notes/resolve/local', [
-    NoteController::class,
-    'resolveKeepLocal'
-]);
+Route::get(
+    '/notes',
+    [NoteController::class, 'index']
+);
 
-Route::post('/notes/resolve/server', [
-    NoteController::class,
-    'resolveKeepServer'
-]);
+Route::post(
+    '/notes/sync',
+    [NoteController::class, 'sync']
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Search
+|--------------------------------------------------------------------------
+|
+| GET /api/notes?search=Laravel
+|
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| Delete
+|--------------------------------------------------------------------------
+*/
+
+Route::delete(
+    '/notes/{clientId}',
+    [NoteController::class, 'destroy']
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Favorite
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/notes/{clientId}/favorite',
+    [NoteController::class, 'toggleFavorite']
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Pin
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/notes/{clientId}/pin',
+    [NoteController::class, 'togglePin']
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Conflict Resolution
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/notes/resolve/local',
+    [
+        NoteController::class,
+        'resolveKeepLocal'
+    ]
+);
+
+Route::post(
+    '/notes/resolve/server',
+    [
+        NoteController::class,
+        'resolveKeepServer'
+    ]
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Statistics
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/notes-statistics',
+    [NoteController::class, 'statistics']
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Sync History
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/sync-history',
+    [NoteController::class, 'history']
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| CSV Export
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/notes-export',
+    [NoteController::class, 'export']
+);
